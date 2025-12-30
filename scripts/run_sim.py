@@ -26,10 +26,10 @@ def main():
     b_i = np.zeros(n_i)
 
     # Simulation config
-    C = SimConfig(dt=0.001, t_max=0.6, record_every=1)
+    C = SimConfig(dt=0.001, max_time=0.6, record_every=1)
 
     # Inputs: CS then US
-    inputs = make_trial_inputs_minimal(n_e=n_e, n_i=n_i, dt=C.dt, t_max=C.t_max)
+    inputs = make_trial_inputs_minimal(n_e=n_e, n_i=n_i, dt=C.dt, max_time=C.max_time)
 
     # Initial state
     r_e0 = np.zeros(n_e)
