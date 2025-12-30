@@ -43,17 +43,19 @@ def simulate_trial(
 #Basic shape checks (fail fast)
 T, n_e = inputs.u_e.shape
 T2, n_i = inputs.u_i.shape
+
 assert T==T2, "u_e and u_i must have same number of time steps"
-assert r_e0.shape == (n_e,),
-assert r_i0.shape == (n_i,),
-assert s_e0.shape == (n_e,),
-assert b_e.shape == (n_e,),
-assert b_i.shape == (n_i,),
+assert r_e0.shape == (n_e,)
+assert r_i0.shape == (n_i,)
+assert s_e0.shape == (n_e,)
+assert b_e.shape == (n_e,)
+assert b_i.shape == (n_i,)
+
 
 n_steps = T
 
 #number of recorded samples 
- n_recorded = (n_steps + C.record_every - 1) // C.record_every
+n_recorded = (n_steps + C.record_every - 1) // C.record_every
 
 t_recorded = np.empty(n_recorded, dtype=float)
 r_e_recorded = np.empty((n_recorded, n_e), dtype=float)
@@ -130,16 +132,16 @@ def make_trial_inputs_minimal(
         cs_amp: float = 1.0,
         us_onset: float = 0.250,
         us_amp_i: float = 1.0,
-        us_ampt_e: float = 1.0,
+        us_amp_e: float = 1.0,
         fraction_a: float = 0.5,
 ) -> TrialInputs:
     """
     Create minimal trial inputs with a CS pulse to all excitatory neurons
     and a US pulse to a fraction of inhibitory and excitatory neurons.
 
-    Returns:
-    TrialInputs object with shape (T, n_e) and (T, n_i)
-    """
+Returns:
+TrialInputs object with shape (T, n_e) and (T, n_i)
+"""
 T = int(np.round(max_time / dt))
 n_a = int(np.round(fraction_a * n_e))
 n_b = n_e - n_a
@@ -161,4 +163,3 @@ u_e[:, n_a:] = us_e[:, None]
 u_i[:, :] = us_i[:, None]
 
 return TrialInputs(u_e=u_e, u_i=u_i)
-   
