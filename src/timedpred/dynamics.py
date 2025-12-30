@@ -24,6 +24,7 @@ def rhs(
     r_i: np.ndarray,
     s_e: np.ndarray,
     u_e: np.ndarray,
+    u_i: np.ndarray,
     b_e: np.ndarray,
     b_i: np.ndarray,
     W: Weights,
