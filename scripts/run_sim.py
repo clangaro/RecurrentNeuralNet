@@ -1,6 +1,6 @@
 import numpy as np
 
-from timedpred.dynamics import Params, Weights
+from timedpred.dynamics import Parameters, Weights
 from timedpred.simulate import SimConfig, make_trial_inputs_minimal, simulate_trial
 
 
@@ -10,7 +10,7 @@ def main():
     n_i = 10
 
     # Parameters (seconds)
-    P = Params(tau_e=0.020, tau_i=0.010, tau_s=0.200)
+    P = Parameters(tau_e=0.020, tau_i=0.010, tau_s=0.200)
 
     # Random weights (very small magnitudes to avoid blow-up)
     rng = np.random.default_rng(0)
