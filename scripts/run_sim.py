@@ -8,24 +8,27 @@ def main():
     # Smallest reasonable sizes for a first run
     n_e = 20
     n_i = 10
+    fraction_a = 0.5
+    n_a = int(np.round(fraction_a * n_e))
+    n_b = n_e - n_a
 
     # Parameters (seconds)
     P = Parameters(tau_e=0.020, tau_i=0.010, tau_s=0.200)
 
     # Random weights (very small magnitudes to avoid blow-up)
     rng = np.random.default_rng(0)
-    # W.w_ee structure:
-    rows = postsynaptic, columns = presynaptic
-    
-    Indices:
-    0 : n_a   # → E_A neurons
-    n_a : n_e # → E_B neurons
-    
-    Block meanings in W_EE:
-    W_EE[:n_a, :n_a]  # → E_A → E_A
-    W_EE[:n_a, n_a:]  # → E_B → E_A
-    W_EE[n_a:, :n_a]  # → E_A → E_B  (this will get a weak bias)
-    W_EE[n_a:, n_a:]  # → E_B → E_B
+# W.w_ee structure:
+# rows = postsynaptic, columns = presynaptic
+#
+# Indices:
+# 0 : n_a   → E_A neurons
+# n_a : n_e → E_B neurons
+#
+# Block meanings in W_EE:
+# W_EE[:n_a, :n_a]   → E_A → E_A
+# W_EE[:n_a, n_a:]   → E_B → E_A
+# W_EE[n_a:, :n_a]   → E_A → E_B  (this will get a weak bias)
+# W_EE[n_a:, n_a:]   → E_B → E_B
 
     W = Weights(
         w_ee=np.abs(rng.normal(0.0, 0.05, size=(n_e, n_e))),
