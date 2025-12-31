@@ -14,18 +14,18 @@ def main():
 
     # Random weights (very small magnitudes to avoid blow-up)
     rng = np.random.default_rng(0)
-    # W.w_ee structure:
-    # rows = postsynaptic, columns = presynaptic
-    #
-    # Indices:
-    # 0 : n_a   → E_A neurons
-    # n_a : n_e → E_B neurons
-    #
-    # Block meanings in W_EE:
-    # W_EE[:n_a, :n_a]   → E_A → E_A
-    # W_EE[:n_a, n_a:]   → E_B → E_A
-    # W_EE[n_a:, :n_a]   → E_A → E_B  (this will get a weak bias)
-    # W_EE[n_a:, n_a:]   → E_B → E_B
+    W.w_ee structure:
+    rows = postsynaptic, columns = presynaptic
+    
+    Indices:
+    0 : n_a   → E_A neurons
+    n_a : n_e → E_B neurons
+    
+    Block meanings in W_EE:
+    W_EE[:n_a, :n_a]   → E_A → E_A
+    W_EE[:n_a, n_a:]   → E_B → E_A
+    W_EE[n_a:, :n_a]   → E_A → E_B  (this will get a weak bias)
+    W_EE[n_a:, n_a:]   → E_B → E_B
 
     W = Weights(
         w_ee=np.abs(rng.normal(0.0, 0.05, size=(n_e, n_e))),
@@ -37,7 +37,7 @@ def main():
     #Weak bias from E_A to E_B (anatomical prior, not learned)
     epsilon = 0.01
     W.w_ee[n_a:, :n_a] += epsilon
-    
+
     # Biases (baseline excitability)
     b_e = np.zeros(n_e)
     b_i = np.zeros(n_i)
