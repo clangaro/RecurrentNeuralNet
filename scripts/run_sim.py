@@ -34,6 +34,10 @@ def main():
         w_ii=np.abs(rng.normal(0.0, 0.05, size=(n_i, n_i))),
     )
 
+    #Weak bias from E_A to E_B (anatomical prior, not learned)
+    epsilon = 0.01
+    W.w_ee[n_a:, :n_a] += epsilon
+    
     # Biases (baseline excitability)
     b_e = np.zeros(n_e)
     b_i = np.zeros(n_i)
