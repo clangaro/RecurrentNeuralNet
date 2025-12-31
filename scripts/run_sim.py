@@ -14,7 +14,7 @@ def main():
 
     # Random weights (very small magnitudes to avoid blow-up)
     rng = np.random.default_rng(0)
-    W.w_ee structure:
+    # W.w_ee structure:
     rows = postsynaptic, columns = presynaptic
     
     Indices:
