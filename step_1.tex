@@ -1,0 +1,157 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{hyperref}
+
+\geometry{margin=1in}
+\onehalfspacing
+
+\title{Stage 1 Formalisation: State Variables and Baseline Dynamics}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Purpose of Stage 1}
+
+The goal of Stage~1 is to fully specify the dynamical system before introducing any learning rules.
+This includes:
+\begin{itemize}
+    \item choosing explicit state variables,
+    \item defining continuous-time equations of motion,
+    \item fixing biologically reasonable parameter scales,
+    \item ensuring the model admits intrinsic temporal structure without explicit delays or clocks.
+\end{itemize}
+
+At this stage, the network is untrained and serves as a baseline dynamical system.
+
+\section{Network Architecture}
+
+The model consists of three interacting populations:
+\begin{itemize}
+    \item an excitatory population $E_A$,
+    \item an excitatory population $E_B$,
+    \item an inhibitory population $I$.
+\end{itemize}
+
+The two excitatory populations are grouped together into a single excitatory vector
+\[
+\mathbf r_E(t) = 
+\begin{bmatrix}
+\mathbf r_A(t) \\
+\mathbf r_B(t)
+\end{bmatrix},
+\]
+while inhibitory activity is represented by $\mathbf r_I(t)$.
+
+\section{State Variables}
+
+The full dynamical state of the system is defined as:
+\[
+\mathbf x(t) = \big( \mathbf r_E(t),\ \mathbf r_I(t),\ \mathbf s_E(t) \big),
+\]
+where:
+\begin{itemize}
+    \item $\mathbf r_E(t) \in \mathbb{R}^{N_E}$ are excitatory firing rates,
+    \item $\mathbf r_I(t) \in \mathbb{R}^{N_I}$ are inhibitory firing rates,
+    \item $\mathbf s_E(t) \in \mathbb{R}^{N_E}$ is a filtered excitatory synaptic trace.
+\end{itemize}
+
+The synaptic trace $\mathbf s_E$ represents slow excitatory synaptic dynamics and provides an intrinsic temporal timescale.
+
+\section{Synaptic Trace Dynamics}
+
+Excitatory synaptic activity is modelled as a low-pass filtered version of excitatory firing rates:
+\begin{equation}
+\tau_s \frac{d\mathbf s_E}{dt}
+=
+-\mathbf s_E + \mathbf r_E.
+\end{equation}
+
+This equation arises from standard exponential synaptic filtering and introduces temporal persistence without delay lines.
+
+\section{Excitatory Population Dynamics}
+
+Excitatory firing rates evolve according to:
+\begin{equation}
+\tau_E \frac{d\mathbf r_E}{dt}
+=
+-\mathbf r_E
++
+\phi\!\left(
+W_{EE}\mathbf s_E
+-
+W_{EI}\mathbf r_I
++
+\mathbf u_E(t)
++
+\mathbf b_E
+\right),
+\end{equation}
+where:
+\begin{itemize}
+    \item $W_{EE}$ denotes excitatory-to-excitatory synaptic weights,
+    \item $W_{EI}$ denotes inhibitory-to-excitatory weights,
+    \item $\mathbf u_E(t)$ is external excitatory input,
+    \item $\mathbf b_E$ is a constant bias term,
+    \item $\phi(\cdot)$ is a non-negative static transfer function.
+\end{itemize}
+
+Using $\mathbf s_E$ rather than $\mathbf r_E$ in recurrent excitation introduces slow temporal structure.
+
+\section{Inhibitory Population Dynamics}
+
+Inhibitory firing rates follow:
+\begin{equation}
+\tau_I \frac{d\mathbf r_I}{dt}
+=
+-\mathbf r_I
++
+\phi_I\!\left(
+W_{IE}\mathbf r_E
+-
+W_{II}\mathbf r_I
++
+\mathbf u_I(t)
++
+\mathbf b_I
+\right),
+\end{equation}
+where $W_{IE}$ and $W_{II}$ are excitatory-to-inhibitory and inhibitory-to-inhibitory weight matrices, respectively.
+
+Inhibitory dynamics are typically faster than excitatory dynamics.
+
+\section{Nonlinearity}
+
+Both populations use a threshold-linear transfer function:
+\[
+\phi(x) = \max(0, x).
+\]
+This choice enforces non-negative firing rates while preserving interpretability and analytical tractability.
+
+\section{Parameter Scales}
+
+The following biologically reasonable parameter values are fixed for Stage~1:
+\begin{itemize}
+    \item Excitatory time constant: $\tau_E = 20~\mathrm{ms}$,
+    \item Inhibitory time constant: $\tau_I = 10~\mathrm{ms}$,
+    \item Synaptic trace time constant: $\tau_s = 200~\mathrm{ms}$.
+\end{itemize}
+
+The separation $\tau_I < \tau_E \ll \tau_s$ ensures fast stabilisation by inhibition and slower temporal integration by recurrent excitation.
+
+\section{Summary}
+
+At the end of Stage~1, the model is a fully specified continuous-time dynamical system with:
+\begin{itemize}
+    \item no explicit clocks or delay lines,
+    \item intrinsic temporal structure arising from synaptic dynamics,
+    \item a clear separation of excitatory and inhibitory roles.
+\end{itemize}
+
+This system forms the baseline upon which learning rules and prediction-error phenomena will later be built.
+
+\end{document}

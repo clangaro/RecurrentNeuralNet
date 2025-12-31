@@ -14,6 +14,19 @@ def main():
 
     # Random weights (very small magnitudes to avoid blow-up)
     rng = np.random.default_rng(0)
+    # W.w_ee structure:
+    # rows = postsynaptic, columns = presynaptic
+    #
+    # Indices:
+    # 0 : n_a   → E_A neurons
+    # n_a : n_e → E_B neurons
+    #
+    # Block meanings in W_EE:
+    # W_EE[:n_a, :n_a]   → E_A → E_A
+    # W_EE[:n_a, n_a:]   → E_B → E_A
+    # W_EE[n_a:, :n_a]   → E_A → E_B  (this will get a weak bias)
+    # W_EE[n_a:, n_a:]   → E_B → E_B
+
     W = Weights(
         w_ee=np.abs(rng.normal(0.0, 0.05, size=(n_e, n_e))),
         w_ei=np.abs(rng.normal(0.0, 0.05, size=(n_e, n_i))),

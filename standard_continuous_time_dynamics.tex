@@ -1,0 +1,116 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{hyperref}
+
+\geometry{margin=1in}
+\onehalfspacing
+
+\title{Standard Continuous-Time Dynamics in Computational Neuroscience}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Definition}
+
+In computational neuroscience, \emph{continuous-time dynamics} refer to models in which neural state variables evolve smoothly over physical time according to ordinary differential equations (ODEs). These dynamics contrast with discrete-time or layer-based update rules commonly used in machine learning.
+
+Formally, a continuous-time system is described by:
+\begin{equation}
+\frac{dx(t)}{dt} = f(x(t), t),
+\end{equation}
+where $x(t)$ represents the state of the system at time $t$, and $f(\cdot)$ specifies the instantaneous rate of change of that state.
+
+\section{Biological Motivation}
+
+Neurons integrate synaptic inputs continuously and exhibit characteristic temporal dynamics determined by membrane capacitance, synaptic kinetics, and conductance changes. Continuous-time models explicitly represent these properties through time constants and differential equations, making them biologically interpretable.
+
+\section{The Canonical Leaky Integrator}
+
+The most widely used continuous-time firing-rate model is the leaky integrator:
+\begin{equation}
+\tau \frac{dr(t)}{dt} = -r(t) + I(t),
+\end{equation}
+where:
+\begin{itemize}
+    \item $r(t)$ is the firing rate of a neuron or neural population,
+    \item $\tau$ is a time constant governing how quickly the neuron responds,
+    \item $-r(t)$ represents passive decay toward baseline activity,
+    \item $I(t)$ is the total synaptic input.
+\end{itemize}
+
+This equation states that firing rate relaxes toward the current input value with characteristic timescale $\tau$.
+
+\section{Recurrent Network Dynamics}
+
+In a recurrent network, synaptic input arises from other neurons in the circuit:
+\begin{equation}
+\tau \dot{\mathbf{r}}(t) = -\mathbf{r}(t) + W \mathbf{r}(t) + \mathbf{u}(t),
+\end{equation}
+where:
+\begin{itemize}
+    \item $\mathbf{r}(t)$ is a vector of population firing rates,
+    \item $W$ is the recurrent synaptic weight matrix,
+    \item $\mathbf{u}(t)$ is an external input.
+\end{itemize}
+
+This formulation is known as a continuous-time recurrent neural network (CTRNN).
+
+\section{Nonlinear Transfer Functions}
+
+To enforce biological constraints such as non-negative firing rates and saturation, a nonlinear transfer function $\phi(\cdot)$ is applied:
+\begin{equation}
+\tau \dot{\mathbf{r}} = -\mathbf{r} + \phi\!\left(W \mathbf{r} + \mathbf{u}(t)\right).
+\end{equation}
+
+Common choices include threshold-linear functions, softplus functions, or sigmoids, depending on the desired balance between interpretability and smoothness.
+
+\section{Why These Dynamics Are Considered Standard}
+
+These equations are considered standard in theoretical and computational neuroscience because they:
+\begin{itemize}
+    \item are derived from biophysical membrane models (e.g.\ Wilson--Cowan frameworks),
+    \item explicitly encode neural timescales,
+    \item support rigorous stability and dynamical systems analysis,
+    \item are widely used to model timing, working memory, and motor control,
+    \item map naturally onto population-level neural recordings.
+\end{itemize}
+
+\section{Continuous-Time Versus Discrete-Time Models}
+
+Continuous-time models differ fundamentally from discrete-time update rules:
+\begin{itemize}
+    \item Continuous-time models describe physical temporal evolution using ODEs,
+    \item Discrete-time models update states in algorithmic steps without intrinsic time,
+    \item Timing in continuous-time systems arises from time constants and eigenmodes,
+    \item Discrete-time systems require explicit counters or step indices.
+\end{itemize}
+
+For studies of temporal prediction and omission responses, continuous-time dynamics are essential because they preserve internal state evolution across time.
+
+\section{Numerical Simulation}
+
+Although the model is defined in continuous time, it is simulated numerically using standard ODE integration methods. For example, Euler integration yields:
+\begin{equation}
+\mathbf{r}(t + \Delta t) = \mathbf{r}(t) + \frac{\Delta t}{\tau}
+\left[-\mathbf{r}(t) + \phi(\cdot)\right].
+\end{equation}
+
+This discretisation approximates the continuous-time dynamics rather than defining them.
+
+\section{Relevance for Timing Models}
+
+Using standard continuous-time dynamics ensures that:
+\begin{itemize}
+    \item temporal structure emerges intrinsically from circuit dynamics,
+    \item prediction errors reflect mismatches in network state rather than explicit subtraction,
+    \item model components remain interpretable at the level of neural populations.
+\end{itemize}
+
+These properties are critical for modelling biologically grounded timing and prediction phenomena.
+
+\end{document}
