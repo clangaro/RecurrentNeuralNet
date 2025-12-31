@@ -18,8 +18,8 @@ def main():
     rows = postsynaptic, columns = presynaptic
     
     Indices:
-    0 : n_a   → E_A neurons
-    n_a : n_e → E_B neurons
+    0 : n_a   # → E_A neurons
+    n_a : n_e # → E_B neurons
     
     Block meanings in W_EE:
     W_EE[:n_a, :n_a]  # → E_A → E_A
