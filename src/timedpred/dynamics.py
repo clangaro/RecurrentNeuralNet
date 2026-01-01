@@ -11,6 +11,7 @@ class Parameters:
     tau_e: float
     tau_i: float
     tau_s: float
+    tau_elig: float
 
 @dataclass(frozen=True)
 class Weights:
