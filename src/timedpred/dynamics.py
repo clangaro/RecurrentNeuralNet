@@ -59,5 +59,6 @@ def rhs(
     # Firing rate dynamics
     dr_e_dt = (-r_e + relu(x_e)) / P.tau_e
     dr_i_dt = (-r_i + relu(x_i)) / P.tau_i
+    ds_e_dt = (-e_e + r_e) / P.tau_e
 
     return dr_e_dt, dr_i_dt, ds_e_dt

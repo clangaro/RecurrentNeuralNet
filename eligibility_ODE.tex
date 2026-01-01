@@ -1,0 +1,123 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\geometry{margin=1in}
+\onehalfspacing
+
+\title{A Minimal Recurrent Network Model for Emergent Timed Prediction and Prediction Error}
+\author{(Proposed Pre-PhD Computational Project)}
+\date{}
+
+\begin{document}
+
+\section{Why the Low-Pass Filtering Equation Takes This Form}
+
+We consider dynamical equations of the general form
+\begin{equation}
+\tau \frac{dx(t)}{dt} = -x(t) + y(t),
+\end{equation}
+which can equivalently be written as
+\begin{equation}
+\frac{dx(t)}{dt} = \frac{y(t) - x(t)}{\tau}.
+\end{equation}
+
+This equation is used to model synaptic traces, eligibility traces, and other neural state variables that must reflect recent activity while gradually forgetting the past. Below we explain, step by step, why this specific form is chosen.
+
+\subsection{Target-Tracking Interpretation}
+
+The equation can be read directly in words as:
+\begin{quote}
+The rate of change of the variable is proportional to the difference between the value it should move toward and its current value, scaled by how fast it is allowed to change.
+\end{quote}
+
+Here:
+\begin{itemize}
+    \item $y(t)$ is the \emph{target value} (e.g.\ current firing rate),
+    \item $x(t)$ is the \emph{current state} (e.g.\ trace value),
+    \item $\tau$ is a \emph{time constant} controlling the speed of adjustment.
+\end{itemize}
+
+When $x(t) < y(t)$, the derivative is positive and $x(t)$ increases.  
+When $x(t) > y(t)$, the derivative is negative and $x(t)$ decreases.  
+When $x(t) = y(t)$, the derivative is zero and the system is at equilibrium.
+
+Thus, $x(t)$ continuously relaxes toward $y(t)$.
+
+\subsection{Minimal Dynamical Assumptions}
+
+This equation is the \emph{simplest possible continuous-time dynamical system} that satisfies all of the following constraints:
+\begin{itemize}
+    \item The system cannot change instantaneously.
+    \item The system retains memory of recent input.
+    \item The system forgets older input smoothly.
+    \item The system is stable and bounded.
+\end{itemize}
+
+Any more complex equation (higher-order, nonlinear, or delayed) would introduce additional assumptions that are unnecessary for the intended biological interpretation.
+
+\subsection{Exponential Memory and Forgetting}
+
+Solving the homogeneous part of the equation,
+\begin{equation}
+\frac{dx}{dt} = -\frac{x}{\tau},
+\end{equation}
+yields:
+\begin{equation}
+x(t) = x(0)\, e^{-t/\tau}.
+\end{equation}
+
+This shows that the system forgets past activity exponentially, with time constant $\tau$.  
+When driven by $y(t)$, the solution becomes a convolution with an exponential kernel:
+\begin{equation}
+x(t) = \int_{-\infty}^{t} e^{-(t - t')/\tau}\, y(t') \, dt'.
+\end{equation}
+
+Thus, $x(t)$ represents a \emph{low-pass filtered version} of $y(t)$, weighting recent inputs more strongly than older ones.
+
+\subsection{Physical and Biological Grounding}
+
+This exact equation arises naturally in many physical and biological systems:
+\begin{itemize}
+    \item RC circuits (voltage across a capacitor),
+    \item Membrane potential dynamics,
+    \item Synaptic receptor kinetics,
+    \item Calcium concentration dynamics.
+\end{itemize}
+
+In all cases, the system exhibits inertia: it responds to input but cannot follow arbitrarily fast changes.
+
+\subsection{Why This Form Is Essential for Eligibility Traces}
+
+For eligibility traces, the goal is to encode \emph{recent presynaptic activity} in a way that:
+\begin{itemize}
+    \item does not explicitly represent time,
+    \item does not require a clock,
+    \item remains local to the synapse,
+    \item decays naturally if no reinforcing event occurs.
+\end{itemize}
+
+The low-pass filtering equation satisfies all of these requirements with a single state variable and a single parameter.
+
+\subsection{Conceptual Summary}
+
+The equation
+\[
+\frac{dx}{dt} = \frac{y - x}{\tau}
+\]
+is not an arbitrary design choice. It is the unique first-order continuous-time rule that:
+\begin{itemize}
+    \item pulls a variable toward a target,
+    \item enforces smooth temporal integration,
+    \item produces exponential memory,
+    \item guarantees stability,
+    \item avoids explicit timing mechanisms.
+\end{itemize}
+
+For these reasons, it is the natural and principled choice for modelling synaptic and eligibility traces in biologically grounded neural systems.
+
+\end{document}
