@@ -12,6 +12,8 @@ class Parameters:
     tau_i: float
     tau_s: float
     tau_elig: float
+    eta_ee: float    # learning rate excitatory to excitatory
+    w_ee_max: float   # max weight excitatory to excitatory
 
 @dataclass(frozen=True)
 class Weights:
