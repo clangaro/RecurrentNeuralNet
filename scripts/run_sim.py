@@ -58,8 +58,26 @@ def main():
     s_e0 = np.zeros(n_e)
     e_e0 = np.zeros(n_e)
 
-    traj = simulate_trial(e_e0, r_e0, r_i0, s_e0, inputs, b_e, b_i, W, P, C)
-    
+    traj = simulate_trial(r_e0, r_i0, s_e0, e_e0, inputs, b_e, b_i, W, P, C)
+
+    # Plot mean firing rate and eligibility trace over time
+    mean_r_e = traj.r_e.mean(axis=1)   # average across excitatory neurons
+    mean_e_e = traj.e_e.mean(axis=1)   # average across excitatory eligibility traces
+
+    plt.figure()
+    plt.plot(traj.t, mean_r_e, label="mean r_e (firing)")
+    plt.plot(traj.t, mean_e_e, label="mean e_e (eligibility)")
+
+    # Optional: mark CS and US onsets (use your input defaults)
+    plt.axvline(0.050, linestyle="--", label="CS onset")
+    plt.axvline(0.250, linestyle="--", label="US onset")
+
+    plt.xlabel("Time (s)")
+    plt.ylabel("Value")
+    plt.title("Eligibility trace vs firing (Stage 3.2 sanity check)")
+    plt.legend()
+    plt.show()
+
 
     print("Simulation complete.")
     print("t shape:", traj.t.shape)
