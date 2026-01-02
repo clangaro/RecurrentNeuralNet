@@ -43,6 +43,7 @@ def test_simulate_trial_shapes_and_finiteness():
     r_e0 = np.zeros(n_e)
     r_i0 = np.zeros(n_i)
     s_e0 = np.zeros(n_e)
+    e_e0 = np.zeros(n_e)
 
     traj = simulate_trial(r_e0, r_i0, s_e0, inputs, b_e, b_i, W, P, C)
 

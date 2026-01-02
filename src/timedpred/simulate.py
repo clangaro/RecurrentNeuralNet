@@ -79,7 +79,7 @@ def simulate_trial(
 
         # RHS derivatives
         # IMPORTANT: use keyword args so ordering cannot break silently
-        dr_e_dt, dr_i_dt, ds_e_dt = rhs(
+        dr_e_dt, dr_i_dt, ds_e_dt, de_e_dt = rhs(
             r_e=r_e,
             r_i=r_i,
             s_e=s_e,
@@ -95,6 +95,7 @@ def simulate_trial(
         r_e = r_e + C.dt * dr_e_dt
         r_i = r_i + C.dt * dr_i_dt
         s_e = s_e + C.dt * ds_e_dt
+        e_e = e_e + C.dt * de_e_dt
 
         # check for non-finite values
         if not (np.all(np.isfinite(r_e)) and np.all(np.isfinite(r_i)) and np.all(np.isfinite(s_e))):
