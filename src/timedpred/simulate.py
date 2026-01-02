@@ -25,12 +25,14 @@ class Trajectory:
     r_e: np.ndarray
     r_i: np.ndarray
     s_e: np.ndarray
+    e_e: np.ndarray
 
 
 def simulate_trial(
     r_e0: np.ndarray,
     r_i0: np.ndarray,
     s_e0: np.ndarray,
+    e_e0: np.ndarray,
     inputs: TrialInputs,
     b_e: np.ndarray,
     b_i: np.ndarray,
@@ -64,11 +66,13 @@ def simulate_trial(
     r_e_recorded = np.empty((n_recorded, n_e), dtype=float)
     r_i_recorded = np.empty((n_recorded, n_i), dtype=float)
     s_e_recorded = np.empty((n_recorded, n_e), dtype=float)
+    e_e_recorded = np.empty((n_recorded, n_e), dtype=float)
 
     # State
     r_e = r_e0.astype(float).copy()
     r_i = r_i0.astype(float).copy()
     s_e = s_e0.astype(float).copy()
+    e_e = e_e0.astype(float).copy()
 
     rec_idx = 0
 
@@ -83,6 +87,7 @@ def simulate_trial(
             r_e=r_e,
             r_i=r_i,
             s_e=s_e,
+            e_e=e_e,
             u_e=u_e,
             u_i=u_i,
             b_e=b_e,
@@ -107,6 +112,7 @@ def simulate_trial(
             r_e_recorded[rec_idx] = r_e
             r_i_recorded[rec_idx] = r_i
             s_e_recorded[rec_idx] = s_e
+            e_e_recorded[rec_idx] = e_e
             rec_idx += 1
 
     return Trajectory(
@@ -114,6 +120,7 @@ def simulate_trial(
         r_e=r_e_recorded,
         r_i=r_i_recorded,
         s_e=s_e_recorded,
+        e_e=e_e_recorded
     )
 
 
