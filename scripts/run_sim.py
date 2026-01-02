@@ -57,7 +57,7 @@ def main():
     s_e0 = np.zeros(n_e)
     e_e0 = np.zeros(n_e)
 
-    traj = simulate_trial(r_e0, r_i0, s_e0, inputs, b_e, b_i, W, P, C)
+    traj = simulate_trial(e_e0, r_e0, r_i0, s_e0, inputs, b_e, b_i, W, P, C)
 
     print("Simulation complete.")
     print("t shape:", traj.t.shape)
