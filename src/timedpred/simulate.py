@@ -102,6 +102,13 @@ def simulate_trial(
         s_e = s_e + C.dt * ds_e_dt
         e_e = e_e + C.dt * de_e_dt
 
+        # Compute weight increment 
+        dW = P.eta_ee * np.outer(r_e, e_e)
+        W.w_ee += dW
+
+        # Enforce max weight constraint
+        W.w_ee = np.clip(W.w_ee, 0.0, P.w_ee_max)
+
         # check for non-finite values
         if not (np.all(np.isfinite(r_e)) and np.all(np.isfinite(r_i)) and np.all(np.isfinite(s_e))):
             raise RuntimeError(f"Non-finite state detected at step {k}")
