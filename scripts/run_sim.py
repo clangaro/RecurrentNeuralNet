@@ -14,7 +14,7 @@ def main():
     n_b = n_e - n_a
 
     # Parameters (seconds)
-    P = Parameters(tau_e=0.020, tau_i=0.010, tau_s=0.200, tau_elig=0.2)
+    P = Parameters(tau_e=0.020, tau_i=0.010, tau_s=0.200, tau_elig=0.2, eta_ee=1e-3, w_ee_max=1.0)
 
     # Random weights (very small magnitudes to avoid blow-up)
     rng = np.random.default_rng(0)
