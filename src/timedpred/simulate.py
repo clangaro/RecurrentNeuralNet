@@ -104,7 +104,7 @@ def simulate_trial(
 
         # Compute weight increment 
         dW = P.eta_ee * np.outer(r_e, e_e)
-        W.w_ee += dW
+        W.w_ee[...] += dW
 
         # Enforce max weight constraint
         W.w_ee = np.clip(W.w_ee, 0.0, P.w_ee_max)
