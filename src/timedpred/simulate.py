@@ -107,7 +107,8 @@ def simulate_trial(
         W.w_ee[...] += dW
 
         # Enforce max weight constraint
-        W.w_ee = np.clip(W.w_ee, 0.0, P.w_ee_max)
+        np.clip(W.w_ee, 0.0, P.w_ee_max, out=W.w_ee)
+
 
         # check for non-finite values
         if not (np.all(np.isfinite(r_e)) and np.all(np.isfinite(r_i)) and np.all(np.isfinite(s_e))):
