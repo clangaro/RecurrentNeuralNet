@@ -45,7 +45,7 @@ def test_simulate_trial_shapes_and_finiteness():
     s_e0 = np.zeros(n_e)
     e_e0 = np.zeros(n_e)
 
-    traj = simulate_trial(r_e0, r_i0, s_e0, inputs, b_e, b_i, W, P, C)
+    traj = simulate_trial(r_e0, r_i0, s_e0, e_e0, inputs, b_e, b_i, W, P, C)
 
     # Shape checks
     assert traj.t.shape == (600,)
