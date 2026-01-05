@@ -67,7 +67,35 @@ def main():
     for trial in range(N_train):
         simulate_trial(r_e0, r_i0, s_e0, e_e0, inputs, b_e, b_i, W, P, C)
 
-    
+    # Turn off learning for testing
+    P_test = Parameters(
+        tau_e=P.tau_e,
+        tau_i=P.tau_i,
+        tau_s=P.tau_s,
+        tau_elig=P.tau_elig,
+        eta_ee=0.0,          # no learning during test
+        w_ee_max=P.w_ee_max
+    )
+
+    # Create CS-only inputs for testing
+    inputs_cs_only = make_trial_inputs_minimal(
+        n_e=n_e,
+        n_i=n_i,
+        dt=C.dt,
+        max_time=C.max_time,
+        cs_onset=0.050,
+        cs_duration=0.020,
+        cs_amp=1.0,
+        us_amp_e=0.0,         # no US
+        us_amp_i=0.0,
+        fraction_a=fraction_a
+    )
+
+     # Simulate test trial
+     traj = simulate_trial(
+        r_e0, r_i0, s_e0, e_e0, inputs_cs_only, b_e, b_i, W, P_test, C
+    )
+
 
     # Extract block means after training
     mean_A_to_B = W.w_ee[n_a:, :n_a].mean() # relationship from A to B 
