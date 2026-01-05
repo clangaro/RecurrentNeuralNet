@@ -75,6 +75,19 @@ def main():
     print(f"Mean weight E_A -> E_B after: {mean_A_to_B}")
     print(f"Mean weight E_B -> E_A after: {mean_B_to_A}")
 
+    # Compute weight changes
+    weight_change_A_to_B = mean_A_to_B - mean_A_to_B_before
+    weight_change_B_to_A = mean_B_to_A - mean_B_to_A_before
+
+    #Plot weight changes
+    label = ["E_A -> E_B", "E_B -> E_A"]
+    changes = [weight_change_A_to_B, weight_change_B_to_A]
+    plt.figure()
+    plt.bar(label, changes)
+    plt.ylabel("Weight change")
+    plt.title("Weight changes after training")
+    plt.show()
+
     # Plot mean firing rate and eligibility trace over time
     mean_r_e = traj.r_e.mean(axis=1)   # average across excitatory neurons
     mean_e_e = traj.e_e.mean(axis=1)   # average across excitatory eligibility traces
