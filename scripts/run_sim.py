@@ -119,17 +119,21 @@ def main():
     plt.legend()
     plt.show()
 
-    # plot peak-time error
-    peak_time_B = traj.t[np.argmax(mean_r_e_B)]
-    expected_us_time = 0.250
+    # --- Peak-time error for predictive population (E_B) ---
+    peak_idx_B = np.argmax(mean_r_e_B)
+    peak_time_B = traj.t[peak_idx_B]
+
+    expected_us_time = 0.250  # trained CS–US interval
     error_B = peak_time_B - expected_us_time
+
     print(f"Peak time error for population B: {error_B:.3f} s")
 
-    #plot
+    # --- Plot peak-time error ---
     plt.figure()
-    plt.bar(["Population B"], [error_B])
+    plt.bar(["Population B (prediction)"], [error_B])
+    plt.axhline(0.0, linestyle="--", color="gray")
     plt.ylabel("Peak time error (s)")
-    plt.title("Timing error after training")
+    plt.title("Timed prediction error after training (CS-only)")
     plt.show()
 
 
