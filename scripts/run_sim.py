@@ -58,6 +58,9 @@ def main():
     s_e0 = np.zeros(n_e)
     e_e0 = np.zeros(n_e)
 
+    # Store a copy
+    W_ee_before = W.w_ee.copy()
+
     traj = simulate_trial(r_e0, r_i0, s_e0, e_e0, inputs, b_e, b_i, W, P, C)
 
     # Plot mean firing rate and eligibility trace over time
