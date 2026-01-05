@@ -68,6 +68,13 @@ def main():
     mean_B_to_A = W.w_ee[:n_a, n_a:].mean()
     mean_A_to_B_before = W_ee_before[n_a:, :n_a].mean()
     mean_B_to_A_before = W_ee_before[:n_a, n_a:].mean() # computing averages before for reference 
+
+    #Print weight changes
+    print(f"Mean weight E_A -> E_B before: {mean_A_to_B_before}")
+    print(f"Mean weight E_B -> E_A before: {mean_B_to_A_before}")
+    print(f"Mean weight E_A -> E_B after: {mean_A_to_B}")
+    print(f"Mean weight E_B -> E_A after: {mean_B_to_A}")
+
     # Plot mean firing rate and eligibility trace over time
     mean_r_e = traj.r_e.mean(axis=1)   # average across excitatory neurons
     mean_e_e = traj.e_e.mean(axis=1)   # average across excitatory eligibility traces
