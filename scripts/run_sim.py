@@ -119,6 +119,23 @@ def main():
     plt.legend()
     plt.show()
 
+    # plot peak-time error
+    peak_time_A = traj.t[np.argmax(mean_r_e_A)]
+    peak_time_B = traj.t[np.argmax(mean_r_e_B)]
+    expected_us_time = 0.250
+    error_A = peak_time_A - expected_us_time
+    error_B = peak_time_B - expected_us_time
+    print(f"Peak time error for population A: {error_A:.3f} s")
+    print(f"Peak time error for population B: {error_B:.3f} s")
+
+    #plot
+    plt.figure()
+    plt.bar(["Population A", "Population B"], [error_A, error_B])
+    plt.ylabel("Peak time error (s)")
+    plt.title("Timing error after training")
+    plt.show()
+
+
 
 
     # # Simulate test trial
