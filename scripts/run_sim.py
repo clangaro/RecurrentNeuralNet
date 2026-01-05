@@ -117,7 +117,8 @@ def main():
     plt.ylabel("Firing rate")
     plt.title("Population responses to CS after training")
     plt.legend()
-    plt.show()
+    plt.show(block=False)
+    
 
     # --- Peak-time error for predictive population (E_B) ---
     peak_idx_B = np.argmax(mean_r_e_B)
