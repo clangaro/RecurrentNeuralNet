@@ -14,7 +14,7 @@ def main():
     n_b = n_e - n_a
 
     # Parameters (seconds)
-    P = Parameters(tau_e=0.020, tau_i=0.010, tau_s=0.200, tau_elig=0.2, eta_ee=1e-3, w_ee_max=1.0)
+    P = Parameters(tau_e=0.020, tau_i=0.010, tau_s=0.200, tau_elig=0.2, eta_ee=1e-4, w_ee_max=1.0)
 
     # Random weights (very small magnitudes to avoid blow-up)
     rng = np.random.default_rng(0)
@@ -62,7 +62,7 @@ def main():
     W_ee_before = W.w_ee.copy()
 
     # Define number of trials 
-    N_train = 50
+    N_train = 20
 
     for trial in range(N_train):
         simulate_trial(r_e0, r_i0, s_e0, e_e0, inputs, b_e, b_i, W, P, C)
