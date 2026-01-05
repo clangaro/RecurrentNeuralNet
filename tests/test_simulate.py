@@ -13,7 +13,7 @@ def test_simulate_trial_shapes_and_finiteness():
     n_a = int(np.round(fraction_a * n_e))
 
     # Parameters (seconds)
-    P = Parameters(tau_e=0.020, tau_i=0.010, tau_s=0.200, tau_elig=0.2)
+    P = Parameters(tau_e=0.020, tau_i=0.010, tau_s=0.200, tau_elig=0.2, eta_ee=0.0, w_ee_max=1.0)
 
     # Weights: small random positive magnitudes
     W = Weights(
