@@ -61,7 +61,13 @@ def main():
     # Store a copy
     W_ee_before = W.w_ee.copy()
 
-    traj = simulate_trial(r_e0, r_i0, s_e0, e_e0, inputs, b_e, b_i, W, P, C)
+    # Define number of trials 
+    N_train = 50
+
+    for trial in range(N_train):
+        simulate_trial(r_e0, r_i0, s_e0, e_e0, inputs, b_e, b_i, W, P, C)
+
+    
 
     # Extract block means after training
     mean_A_to_B = W.w_ee[n_a:, :n_a].mean() # relationship from A to B 
