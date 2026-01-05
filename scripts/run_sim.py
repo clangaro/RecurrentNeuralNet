@@ -18,6 +18,7 @@ def main():
 
     # Random weights (very small magnitudes to avoid blow-up)
     rng = np.random.default_rng(0)
+
 # W.w_ee structure:
 # rows = postsynaptic, columns = presynaptic
 #
@@ -91,27 +92,56 @@ def main():
         fraction_a=fraction_a
     )
 
-    # Simulate test trial
+    # run one test trial starting from baseline and using learned weights
     traj = simulate_trial(
         r_e0, r_i0, s_e0, e_e0, inputs_cs_only, b_e, b_i, W, P_test, C
     )
 
+    # split excitatory activity into A and B populations
+    r_e_A = traj.r_e[:, :n_a]
+    r_e_B = traj.r_e[:, n_a:]
 
-    # Extract block means after training
-    mean_A_to_B = W.w_ee[n_a:, :n_a].mean() # relationship from A to B 
-    mean_B_to_A = W.w_ee[:n_a, n_a:].mean()
-    mean_A_to_B_before = W_ee_before[n_a:, :n_a].mean()
-    mean_B_to_A_before = W_ee_before[:n_a, n_a:].mean() # computing averages before for reference 
+    # extract firing rates for A and B populations
+    mean_r_e_A = r_e_A.mean(axis=1)
+    mean_r_e_B = r_e_B.mean(axis=1)
 
-    #Print weight changes
-    print(f"Mean weight E_A -> E_B before: {mean_A_to_B_before}")
-    print(f"Mean weight E_B -> E_A before: {mean_B_to_A_before}")
-    print(f"Mean weight E_A -> E_B after: {mean_A_to_B}")
-    print(f"Mean weight E_B -> E_A after: {mean_B_to_A}")
+    # compute mean activity over neurons in each population
+    plt.figure()
+    plt.plot(traj.t, mean_r_e_A, label="mean r_e_A (population A)")
+    plt.plot(traj.t, mean_r_e_B, label="mean r_e_B (population B)")
 
-    # Compute weight changes
-    weight_change_A_to_B = mean_A_to_B - mean_A_to_B_before
-    weight_change_B_to_A = mean_B_to_A - mean_B_to_A_before
+    # Mark CS onset
+    plt.axvline(0.050, linestyle="--", label="CS onset")
+    plt.axvline(0.250, linestyle="--", label="Expected US time")
+    plt.xlabel("Time (s)")
+    plt.ylabel("Firing rate")
+    plt.title("Population responses to CS after training")
+    plt.legend()
+    plt.show()
+
+
+
+    # # Simulate test trial
+    # traj = simulate_trial(
+    #     r_e0, r_i0, s_e0, e_e0, inputs_cs_only, b_e, b_i, W, P_test, C
+    # )
+
+
+    # # Extract block means after training
+    # mean_A_to_B = W.w_ee[n_a:, :n_a].mean() # relationship from A to B 
+    # mean_B_to_A = W.w_ee[:n_a, n_a:].mean()
+    # mean_A_to_B_before = W_ee_before[n_a:, :n_a].mean()
+    # mean_B_to_A_before = W_ee_before[:n_a, n_a:].mean() # computing averages before for reference 
+
+    # #Print weight changes
+    # print(f"Mean weight E_A -> E_B before: {mean_A_to_B_before}")
+    # print(f"Mean weight E_B -> E_A before: {mean_B_to_A_before}")
+    # print(f"Mean weight E_A -> E_B after: {mean_A_to_B}")
+    # print(f"Mean weight E_B -> E_A after: {mean_B_to_A}")
+
+    # # Compute weight changes
+    # weight_change_A_to_B = mean_A_to_B - mean_A_to_B_before
+    # weight_change_B_to_A = mean_B_to_A - mean_B_to_A_before
 
     # #Plot weight changes
     # label = ["E_A -> E_B", "E_B -> E_A"]
