@@ -63,6 +63,10 @@ def main():
 
     traj = simulate_trial(r_e0, r_i0, s_e0, e_e0, inputs, b_e, b_i, W, P, C)
 
+    # Extract block means after training
+    mean_A_to_B = W.w_ee[n_a:, :n_a].mean() # relationship from A to B 
+    mean_B_to_A = W.w_ee[:n_a, n_a:].mean()
+
     # Plot mean firing rate and eligibility trace over time
     mean_r_e = traj.r_e.mean(axis=1)   # average across excitatory neurons
     mean_e_e = traj.e_e.mean(axis=1)   # average across excitatory eligibility traces
