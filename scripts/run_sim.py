@@ -113,41 +113,41 @@ def main():
     weight_change_A_to_B = mean_A_to_B - mean_A_to_B_before
     weight_change_B_to_A = mean_B_to_A - mean_B_to_A_before
 
-    #Plot weight changes
-    label = ["E_A -> E_B", "E_B -> E_A"]
-    changes = [weight_change_A_to_B, weight_change_B_to_A]
-    plt.figure()
-    plt.bar(label, changes)
-    plt.ylabel("Weight change")
-    plt.title("Weight changes after training")
-    plt.show()
+    # #Plot weight changes
+    # label = ["E_A -> E_B", "E_B -> E_A"]
+    # changes = [weight_change_A_to_B, weight_change_B_to_A]
+    # plt.figure()
+    # plt.bar(label, changes)
+    # plt.ylabel("Weight change")
+    # plt.title("Weight changes after training")
+    # plt.show()
 
-    # Plot mean firing rate and eligibility trace over time
-    mean_r_e = traj.r_e.mean(axis=1)   # average across excitatory neurons
-    mean_e_e = traj.e_e.mean(axis=1)   # average across excitatory eligibility traces
+    # # Plot mean firing rate and eligibility trace over time
+    # mean_r_e = traj.r_e.mean(axis=1)   # average across excitatory neurons
+    # mean_e_e = traj.e_e.mean(axis=1)   # average across excitatory eligibility traces
 
-    plt.figure()
-    plt.plot(traj.t, mean_r_e, label="mean r_e (firing)")
-    plt.plot(traj.t, mean_e_e, label="mean e_e (eligibility)")
+    # plt.figure()
+    # plt.plot(traj.t, mean_r_e, label="mean r_e (firing)")
+    # plt.plot(traj.t, mean_e_e, label="mean e_e (eligibility)")
 
-    # Mark CS and US onsets
-    plt.axvline(0.050, linestyle="--", label="CS onset")
-    plt.axvline(0.250, linestyle="--", label="US onset")
+    # # Mark CS and US onsets
+    # plt.axvline(0.050, linestyle="--", label="CS onset")
+    # plt.axvline(0.250, linestyle="--", label="US onset")
 
-    plt.xlabel("Time (s)")
-    plt.ylabel("Value")
-    plt.title("Eligibility trace vs firing (Stage 3.2 sanity check)")
-    plt.legend()
-    plt.show()
+    # plt.xlabel("Time (s)")
+    # plt.ylabel("Value")
+    # plt.title("Eligibility trace vs firing (Stage 3.2 sanity check)")
+    # plt.legend()
+    # plt.show()
 
 
-    print("Simulation complete.")
-    print("t shape:", traj.t.shape)
-    print("r_e shape:", traj.r_e.shape)
-    print("r_i shape:", traj.r_i.shape)
-    print("s_e shape:", traj.s_e.shape)
-    print("max r_e:", np.max(traj.r_e))
-    print("max r_i:", np.max(traj.r_i))
+    # print("Simulation complete.")
+    # print("t shape:", traj.t.shape)
+    # print("r_e shape:", traj.r_e.shape)
+    # print("r_i shape:", traj.r_i.shape)
+    # print("s_e shape:", traj.s_e.shape)
+    # print("max r_e:", np.max(traj.r_e))
+    # print("max r_i:", np.max(traj.r_i))
 
 
 if __name__ == "__main__":
