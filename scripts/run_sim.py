@@ -130,7 +130,7 @@ def main():
     plt.plot(traj.t, mean_r_e, label="mean r_e (firing)")
     plt.plot(traj.t, mean_e_e, label="mean e_e (eligibility)")
 
-    # mMark CS and US onsets
+    # Mark CS and US onsets
     plt.axvline(0.050, linestyle="--", label="CS onset")
     plt.axvline(0.250, linestyle="--", label="US onset")
 
