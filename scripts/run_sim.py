@@ -91,8 +91,8 @@ def main():
         fraction_a=fraction_a
     )
 
-     # Simulate test trial
-     traj = simulate_trial(
+    # Simulate test trial
+    traj = simulate_trial(
         r_e0, r_i0, s_e0, e_e0, inputs_cs_only, b_e, b_i, W, P_test, C
     )
 
