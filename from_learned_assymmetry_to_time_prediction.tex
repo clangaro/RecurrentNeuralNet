@@ -1,0 +1,77 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{hyperref}
+
+\geometry{margin=1in}
+\onehalfspacing
+
+\title{Last step of project}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\section{Next Step: From Learned Asymmetry to Timed Prediction}
+
+At this stage of the project, we have established that eligibility-based Hebbian learning produces a \emph{directional change in synaptic weights} consistent with the temporal structure of the task. Specifically, synapses from the excitatory subpopulation $E_A$ to $E_B$ strengthen more than those from $E_B$ to $E_A$, reflecting the causal order of CS preceding US.
+
+This confirms that the learning rule successfully assigns temporal credit at the circuit level. The next step is to determine whether this learned synaptic asymmetry is sufficient to generate \emph{timed prediction} at the level of network dynamics.
+
+\subsection{Goal of the Next Stage}
+
+The goal of the next stage is to test the following claim:
+\begin{quote}
+Learning-induced directional connectivity enables the network to internally generate a temporally precise prediction of the US following presentation of the CS alone.
+\end{quote}
+
+In other words, we ask whether activity in $E_B$ emerges at the learned CS--US interval \emph{without external US input}.
+
+\subsection{Training--Testing Paradigm}
+
+To address this, the simulation will be divided into two distinct phases:
+
+\paragraph{Training phase.}
+The network is exposed to repeated CS--US pairings while learning is enabled. During this phase:
+\begin{itemize}
+    \item Eligibility traces are accumulated based on presynaptic activity.
+    \item Synaptic weights $W_{EE}$ are updated according to the eligibility-based Hebbian rule.
+    \item Directional asymmetry between $E_A \rightarrow E_B$ synapses is reinforced.
+\end{itemize}
+
+\paragraph{Testing phase.}
+After training, synaptic weights are frozen. The network is then presented with the CS alone:
+\begin{itemize}
+    \item No US input is provided.
+    \item Learning is disabled to isolate the effect of learned connectivity.
+    \item Network activity is monitored to assess whether $E_B$ exhibits a delayed response.
+\end{itemize}
+
+This separation ensures that any observed response in $E_B$ during testing is a consequence of learned dynamics rather than ongoing plasticity or external input.
+
+\subsection{Expected Outcome: Timed Prediction}
+
+If learning has successfully embedded temporal structure into the circuit, the following behaviour is expected during CS-only trials:
+\begin{itemize}
+    \item $E_A$ responds immediately to the CS.
+    \item $E_B$ exhibits a delayed increase in activity.
+    \item The timing of the $E_B$ response aligns with the previously experienced CS--US interval.
+\end{itemize}
+
+Such a response constitutes a \emph{timed prediction}: the network internally generates activity corresponding to the expected occurrence of the US.
+
+\subsection{Significance}
+
+Demonstrating timed prediction in CS-only trials completes the mechanistic chain established in the project:
+\begin{enumerate}
+    \item Eligibility traces provide a local memory of past activity.
+    \item Eligibility-based Hebbian learning induces directional synaptic asymmetry.
+    \item Learned asymmetry reshapes recurrent dynamics.
+    \item Recurrent dynamics generate temporally precise predictions without explicit clocks or error units.
+\end{enumerate}
+
+This result directly supports the central claim of the model: that temporal prediction and prediction error can emerge intrinsically from recurrent circuit dynamics and biologically plausible learning rules.
+
+\end{document}
